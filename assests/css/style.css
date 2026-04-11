@@ -440,11 +440,118 @@ footer span {
   transform: translateY(0);
 }
 
+/* ── HAMBURGER BUTTON ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  z-index: 200;
+}
+
+.hamburger:hover {
+  background: var(--purple-pale);
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  background: var(--purple-mid);
+  border-radius: 4px;
+  transition: transform 0.35s ease, opacity 0.25s ease, width 0.3s ease;
+  transform-origin: center;
+}
+
+/* X animasyonu */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ── MOBİL MENÜ OVERLAY ── */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(91, 33, 182, 0.15);
+  backdrop-filter: blur(2px);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-overlay.open {
+  opacity: 1;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   body::before { left: 48px; }
   .section { padding: 3.5rem 1.2rem 2rem 3.5rem; }
   nav { padding: 0 1rem; }
-  .nav-links { gap: 1.2rem; }
   .hero-deco { display: none; }
+
+  .hamburger { display: flex; }
+
+  .nav-overlay { display: block; pointer-events: none; }
+  .nav-overlay.open { pointer-events: all; }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(280px, 80vw);
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    border-left: 2px solid var(--purple-light);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    padding: 5rem 2rem 2rem;
+    z-index: 199;
+    transform: translateX(110%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -8px 0 40px #7c3aed22;
+  }
+
+  .nav-links.open {
+    transform: translateX(0);
+  }
+
+  .nav-links li {
+    width: 100%;
+    border-bottom: 1px solid var(--purple-pale);
+  }
+
+  .nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 1rem 0.5rem;
+    font-size: 1.6rem;
+    color: var(--purple-ink);
+  }
+
+  .nav-links a::after {
+    bottom: 0;
+  }
 }

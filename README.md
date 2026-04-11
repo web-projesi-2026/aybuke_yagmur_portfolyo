@@ -1,4 +1,5 @@
 [README.md](https://github.com/user-attachments/files/26326628/README.md)
+[Canlı Link](https://web-projesi-2026.github.io/aybuke_yagmur_portfolyo/index.html)
 # Aybüke Yağmur – Kişisel Web Sitesi
 
 Mor tema ve çizgili kağıt arka planlı kişisel portfolyo sitesi.
@@ -7,12 +8,12 @@ Mor tema ve çizgili kağıt arka planlı kişisel portfolyo sitesi.
 
 ```
 ├── index.html          # Ana sayfa
-├── assets/
+├── assests/
 │   ├── css/style.css   # Tüm stiller
 │   └── js/jScript.js   # Scroll animasyonları & etkileşimler
 └── pages/
     ├── about.html      # Hakkımda
-    ├── projects.html   # Projeler
+    ├── project.html   # Projeler
     └── contact.html    # İletişim
 ```
 
