@@ -50,3 +50,44 @@ if (subtitleEl) {
   }
   setTimeout(type, 800);
 }
+
+// ── Hamburger Menu ──
+const hamburger = document.querySelector('.hamburger');
+const navMenu   = document.querySelector('.nav-links');
+const overlay   = document.querySelector('.nav-overlay');
+
+function openMenu() {
+  hamburger.classList.add('open');
+  navMenu.classList.add('open');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  hamburger.setAttribute('aria-expanded', 'true');
+}
+
+function closeMenu() {
+  hamburger.classList.remove('open');
+  navMenu.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  hamburger.setAttribute('aria-expanded', 'false');
+}
+
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.contains('open') ? closeMenu() : openMenu();
+  });
+}
+
+if (overlay) {
+  overlay.addEventListener('click', closeMenu);
+}
+
+// Menü linklerine tıklayınca kapat
+navLinks.forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
+// Escape tuşu
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeMenu();
+});
