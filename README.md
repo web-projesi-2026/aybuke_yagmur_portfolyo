@@ -8,7 +8,7 @@ Mor tema ve çizgili kağıt arka planlı kişisel portfolyo sitesi.
 
 ```
 ├── index.html          # Ana sayfa
-├── assets/
+├── assests/
 │   ├── css/style.css   # Tüm stiller
 │   └── js/jScript.js   # Scroll animasyonları & etkileşimler
 └── pages/
