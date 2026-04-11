@@ -13,7 +13,7 @@ Mor tema ve çizgili kağıt arka planlı kişisel portfolyo sitesi.
 │   └── js/jScript.js   # Scroll animasyonları & etkileşimler
 └── pages/
     ├── about.html      # Hakkımda
-    ├── projects.html   # Projeler
+    ├── project.html   # Projeler
     └── contact.html    # İletişim
 ```
 
