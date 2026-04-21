@@ -1,93 +1,109 @@
+/* ─────────────────────────────────────────
+   jScript.js — Aybüke Yağmur Portfolyo
+   İçerik: Mobil Menü · Dark Mode · Yukarı Çık · Reveal Animasyonu
+───────────────────────────────────────── */
 
-// ── Scroll Reveal ──
-const reveals = document.querySelectorAll('.reveal');
+document.addEventListener('DOMContentLoaded', () => {
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, 80 * i);
-    }
-  });
-}, { threshold: 0.12 });
+  /* ── 1. MOBİL HAMBURGER MENÜ ── */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks  = document.querySelector('.nav-links');
+  const overlay   = document.querySelector('.nav-overlay');
 
-reveals.forEach(el => observer.observe(el));
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open', isOpen);
+      overlay && overlay.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
 
-// ── Active nav link ──
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
+    overlay && overlay.addEventListener('click', closeMenu);
 
-window.addEventListener('scroll', () => {
-  const scrollPos = window.scrollY + 100;
+    navLinks.querySelectorAll('a').forEach(link =>
+      link.addEventListener('click', closeMenu)
+    );
 
-  sections.forEach(section => {
-    const top = section.offsetTop;
-    const height = section.offsetHeight;
-
-    if (scrollPos >= top && scrollPos < top + height) {
-      navLinks.forEach(link => {
-        link.classList.remove('active-link');
-        if (link.getAttribute('href').includes(section.id)) {
-          link.classList.add('active-link');
-        }
-      });
-    }
-  });
-});
-
-// ── Typewriter effect for hero subtitle ──
-const subtitleEl = document.getElementById('hero-subtitle');
-if (subtitleEl) {
-  const text = subtitleEl.dataset.text || '';
-  subtitleEl.textContent = '';
-  let idx = 0;
-  function type() {
-    if (idx < text.length) {
-      subtitleEl.textContent += text[idx++];
-      setTimeout(type, 45);
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+      overlay && overlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
   }
-  setTimeout(type, 800);
-}
 
-// ── Hamburger Menu ──
-const hamburger = document.querySelector('.hamburger');
-const navMenu   = document.querySelector('.nav-links');
-const overlay   = document.querySelector('.nav-overlay');
 
-function openMenu() {
-  hamburger.classList.add('open');
-  navMenu.classList.add('open');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  hamburger.setAttribute('aria-expanded', 'true');
-}
+  /* ── 2. DARK MODE ── */
+  const toggleBtn = document.getElementById('darkToggle');
+  const STORAGE_KEY = 'aybuke-dark-mode';
 
-function closeMenu() {
-  hamburger.classList.remove('open');
-  navMenu.classList.remove('open');
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-  hamburger.setAttribute('aria-expanded', 'false');
-}
+  // Kaydedilmiş tercihi uygula
+  if (localStorage.getItem(STORAGE_KEY) === 'true') {
+    document.body.classList.add('dark-mode');
+  }
 
-if (hamburger) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.contains('open') ? closeMenu() : openMenu();
-  });
-}
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem(STORAGE_KEY, isDark);
+      toggleBtn.setAttribute('aria-label', isDark ? 'Açık moda geç' : 'Koyu moda geç');
+    });
+  }
 
-if (overlay) {
-  overlay.addEventListener('click', closeMenu);
-}
 
-// Menü linklerine tıklayınca kapat
-navLinks.forEach(link => {
-  link.addEventListener('click', closeMenu);
-});
+  /* ── 3. YUKARIYA ÇIK BUTONU ── */
+  const scrollBtn = document.getElementById('scrollTopBtn');
 
-// Escape tuşu
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeMenu();
+  if (scrollBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.classList.add('show');
+      } else {
+        scrollBtn.classList.remove('show');
+      }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+
+  /* ── 4. SCROLL REVEAL ANİMASYONU ── */
+  const revealEls = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+  } else {
+    // Eski tarayıcı fallback
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+
+
+  /* ── 5. HERO YAZI ANİMASYONU (Typewriter) ── */
+  const heroSub = document.getElementById('hero-subtitle');
+  if (heroSub) {
+    const text = heroSub.dataset.text || heroSub.textContent;
+    heroSub.textContent = '';
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        heroSub.textContent += text[i++];
+        setTimeout(type, 45);
+      }
+    };
+    setTimeout(type, 700);
+  }
+
 });
