@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -10,17 +9,31 @@
 <body>
 
   <div class="nav-overlay"></div>
+
   <nav>
     <a class="nav-logo" href="index.html">✦ Aybüke</a>
+
     <ul class="nav-links">
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="pages/about.html">Hakkımda</a></li>
       <li><a href="pages/project.html">Projeler</a></li>
       <li><a href="pages/contact.html">İletişim</a></li>
     </ul>
-    <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+
+    <div class="nav-right">
+      <!-- Dark Mode Toggle -->
+      <button
+        class="dark-toggle"
+        id="darkToggle"
+        aria-label="Koyu moda geç"
+        title="Tema değiştir"
+      ></button>
+
+      <!-- Hamburger (mobil) -->
+      <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -41,7 +54,6 @@
   <section class="section" id="highlights">
     <p class="section-label reveal">Öne Çıkanlar</p>
     <h2 class="section-title reveal"><span>Kısaca Ben</span></h2>
-
     <div class="card-grid">
       <div class="card reveal">
         <span class="card-icon">📍</span>
@@ -59,7 +71,6 @@
         <p class="card-text">Müzik dinlemek ve yeni yerleri keşfetmek beni dinlendiriyor.</p>
       </div>
     </div>
-
     <div style="margin-top: 2.5rem; text-align: center;">
       <a href="pages/about.html" class="hero-btn">Daha Fazlası →</a>
     </div>
@@ -68,6 +79,9 @@
   <footer>
     Sevgiyle yapıldı &nbsp;✦&nbsp; <span>Aybüke Yağmur</span> © 2026
   </footer>
+
+  <!-- Yukarı Çık Butonu -->
+  <button id="scrollTopBtn" aria-label="Yukarı çık" title="Yukarı çık">↑</button>
 
   <script src="assests/js/jScript.js"></script>
 </body>
