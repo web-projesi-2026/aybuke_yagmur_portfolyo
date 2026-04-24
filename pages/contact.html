@@ -1,61 +1,711 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>İletişim – Aybüke Yağmur</title>
-  <link rel="stylesheet" href="../assests/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep: #5b21b6;
+      --purple-mid:  #7c3aed;
+      --purple-light:#a78bfa;
+      --purple-pale: #ede9fe;
+      --purple-ink:  #4c1d95;
+      --line-color:  #c4b5fd44;
+      --margin-line: #f9a8d4aa;
+      --text-dark:   #1e1b2e;
+      --text-body:   #3b3554;
+      --paper-bg:    #fdfcff;
+      --card-bg:     #ffffff;
+      --nav-bg:      rgba(255,255,255,0.88);
+      --error:       #dc2626;
+      --error-bg:    #fef2f2;
+      --success:     #16a34a;
+      --success-bg:  #f0fdf4;
+    }
+
+    body.dark-mode {
+      --purple-deep: #c4b5fd;
+      --purple-mid:  #a78bfa;
+      --purple-light:#7c3aed;
+      --purple-pale: #2d1b69;
+      --purple-ink:  #ddd6fe;
+      --line-color:  #7c3aed22;
+      --margin-line: #f9a8d433;
+      --text-dark:   #f0ebff;
+      --text-body:   #c4b5fd;
+      --paper-bg:    #0f0b1e;
+      --card-bg:     #1a1030;
+      --nav-bg:      rgba(15,11,30,0.92);
+      --error:       #f87171;
+      --error-bg:    #2d1010;
+      --success:     #4ade80;
+      --success-bg:  #0f2d18;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', serif;
+      color: var(--text-dark);
+      background-color: var(--paper-bg);
+      background-image: repeating-linear-gradient(
+        transparent, transparent 31px,
+        var(--line-color) 31px, var(--line-color) 32px
+      );
+      background-size: 100% 32px;
+      min-height: 100vh;
+      position: relative;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 72px;
+      width: 2px; height: 100%;
+      background: var(--margin-line);
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--purple-light);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 20px #7c3aed18;
+      transition: background 0.4s;
+    }
+
+    .nav-logo {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--purple-mid); text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: var(--text-body); text-decoration: none;
+      position: relative; padding-bottom: 2px;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: var(--purple-mid);
+      border-radius: 2px; transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--purple-mid); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--purple-mid); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .dark-toggle {
+      background: none;
+      border: 2px solid var(--purple-light);
+      border-radius: 50px;
+      width: 52px; height: 28px;
+      cursor: pointer; position: relative;
+      transition: border-color 0.3s, background 0.3s;
+      flex-shrink: 0;
+    }
+
+    .dark-toggle::after {
+      content: '☀️';
+      position: absolute; top: 50%; left: 4px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      transition: left 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    body.dark-mode .dark-toggle { background: var(--purple-pale); border-color: var(--purple-mid); }
+    body.dark-mode .dark-toggle::after { content: '🌙'; left: 26px; }
+
+    .hamburger {
+      display: none; flex-direction: column;
+      justify-content: center; gap: 5px;
+      width: 40px; height: 40px;
+      background: none; border: none; cursor: pointer;
+      padding: 4px; border-radius: 8px;
+      transition: background 0.2s; z-index: 200;
+    }
+
+    .hamburger:hover { background: var(--purple-pale); }
+
+    .hamburger span {
+      display: block; width: 100%; height: 2.5px;
+      background: var(--purple-mid); border-radius: 4px;
+      transition: transform 0.35s ease, opacity 0.25s, width 0.3s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    .nav-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(91,33,182,0.15);
+      backdrop-filter: blur(2px);
+      z-index: 98; opacity: 0; transition: opacity 0.3s;
+    }
+    .nav-overlay.open { opacity: 1; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      max-width: 760px; margin: 0 auto;
+      padding: 4rem 2rem 0 5rem;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .page-tag {
+      font-family: 'Caveat', cursive;
+      font-size: 0.95rem; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      display: block; margin-bottom: 0.4rem;
+    }
+
+    .page-title {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-weight: 700; color: var(--purple-deep);
+      line-height: 1.05;
+    }
+
+    .page-title span {
+      color: var(--purple-mid);
+      border-bottom: 3px solid var(--purple-light);
+      padding-bottom: 2px;
+    }
+
+    .page-desc {
+      margin-top: 0.9rem;
+      font-size: 0.97rem; color: var(--text-body);
+      font-style: italic; line-height: 1.7;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .contact-layout {
+      max-width: 760px; margin: 2.5rem auto 0;
+      padding: 0 2rem 5rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      position: relative; z-index: 1;
+    }
+
+    /* ── INFO SIDEBAR ── */
+    .info-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 16px;
+      padding: 1.25rem 1rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.4s;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .info-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--purple-mid), var(--purple-light));
+      border-radius: 4px 0 0 4px;
+    }
+
+    .info-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px #7c3aed18; }
+
+    .info-icon { font-size: 1.5rem; margin-bottom: 0.4rem; display: block; }
+
+    .info-label {
+      font-family: 'Caveat', cursive;
+      font-size: 0.8rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--purple-light);
+      margin-bottom: 0.2rem;
+    }
+
+    .info-value {
+      font-size: 0.9rem; color: var(--text-body);
+      word-break: break-all; line-height: 1.5;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 20px;
+      padding: 2rem 1.75rem;
+      box-shadow: 4px 4px 0 var(--purple-pale);
+      transition: background 0.4s;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .form-row { margin-bottom: 1.25rem; }
+
+    .form-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--purple-ink);
+      margin-bottom: 0.4rem;
+    }
+
+    label .req { color: var(--purple-mid); }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      font-family: 'Lora', serif;
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      background: var(--paper-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.4s;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--purple-mid);
+      box-shadow: 0 0 0 3px #7c3aed18;
+    }
+
+    input.error, textarea.error, select.error {
+      border-color: var(--error) !important;
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.12) !important;
+    }
+
+    textarea { min-height: 120px; }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.2rem;
+      cursor: pointer;
+    }
+
+    /* ── ERROR / SUCCESS MESSAGES ── */
+    .err-msg {
+      display: none;
+      font-size: 0.8rem;
+      color: var(--error);
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .err-msg.show { display: block; }
+
+    .form-success {
+      display: none;
+      background: var(--success-bg);
+      border: 1.5px solid var(--success);
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .form-success.show { display: block; }
+
+    .success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .success-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--success); margin-bottom: 0.4rem;
+    }
+
+    .success-text { font-size: 0.93rem; color: var(--text-body); font-style: italic; }
+
+    /* ── CHAR COUNTER ── */
+    .char-row {
+      display: flex; justify-content: flex-end;
+      margin-top: 0.25rem;
+    }
+
+    .char-count {
+      font-size: 0.75rem; color: var(--purple-light);
+      font-style: italic;
+    }
+
+    .char-count.warn { color: var(--error); }
+
+    /* ── SUBMIT ── */
+    .submit-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .btn-submit {
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem; font-weight: 700;
+      color: white; background: var(--purple-mid);
+      border: none; border-radius: 50px;
+      padding: 0.8rem 2.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 24px #7c3aed44;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background: var(--purple-deep);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px #7c3aed55;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6; cursor: not-allowed;
+      transform: none; box-shadow: none;
+    }
+
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .btn-submit.loading .btn-spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+
+    /* ── SCROLL TOP ── */
+    #scrollTopBtn {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--purple-mid); color: white;
+      border: none; cursor: pointer; font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px #7c3aed44;
+      z-index: 999; opacity: 0; pointer-events: none;
+      transform: translateY(16px) scale(0.85);
+      transition: opacity 0.35s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.2s;
+    }
+
+    #scrollTopBtn.show { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    #scrollTopBtn:hover { background: var(--purple-deep); transform: translateY(-3px) scale(1.08); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1rem;
+      font-family: 'Caveat', cursive; font-size: 1.05rem;
+      color: var(--purple-light);
+      border-top: 1.5px solid var(--purple-pale);
+      position: relative; z-index: 1;
+    }
+
+    footer span { color: var(--purple-mid); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      body::before { left: 48px; }
+      .page-header { padding: 2.5rem 1.2rem 0 3.5rem; }
+      .contact-layout {
+        grid-template-columns: 1fr;
+        padding: 0 1.2rem 4rem 3.5rem;
+      }
+      .info-sidebar { flex-direction: row; flex-wrap: wrap; }
+      .info-card { flex: 1 1 140px; }
+      .form-row-split { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+      .hamburger { display: flex; }
+      .nav-overlay { display: block; pointer-events: none; }
+      .nav-overlay.open { pointer-events: all; }
+      .nav-links {
+        position: fixed; top: 0; right: 0;
+        height: 100vh; width: min(280px, 80vw);
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(20px);
+        border-left: 2px solid var(--purple-light);
+        flex-direction: column;
+        justify-content: center; align-items: flex-start;
+        gap: 0; padding: 5rem 2rem 2rem;
+        z-index: 199;
+        transform: translateX(110%);
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        box-shadow: -8px 0 40px #7c3aed22;
+      }
+      body.dark-mode .nav-links { background: rgba(15,11,30,0.97); }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links li { width: 100%; border-bottom: 1px solid var(--purple-pale); }
+      .nav-links li:last-child { border-bottom: none; }
+      .nav-links a { display: block; padding: 1rem 0.5rem; font-size: 1.6rem; }
+      .submit-wrap { justify-content: stretch; }
+      .btn-submit { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 
   <div class="nav-overlay"></div>
+
   <nav>
     <a class="nav-logo" href="../index.html">✦ Aybüke</a>
     <ul class="nav-links">
       <li><a href="../index.html">Ana Sayfa</a></li>
       <li><a href="about.html">Hakkımda</a></li>
       <li><a href="project.html">Projeler</a></li>
-      <li><a href="contact.html">İletişim</a></li>
+      <li><a href="contact.html" class="active">İletişim</a></li>
     </ul>
-    <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+      <button class="dark-toggle" id="darkToggle" aria-label="Koyu moda geç" title="Tema değiştir"></button>
+      <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
-  <section class="section" id="contact">
-    <p class="section-label reveal">Ulaş Bana</p>
-    <h2 class="section-title reveal"><span>İletişim</span></h2>
+  <!-- BAŞLIK -->
+  <header class="page-header">
+    <span class="page-tag">Benimle iletişime geç</span>
+    <h1 class="page-title">Bir <span>Mesaj</span> Bırak</h1>
+    <p class="page-desc">Sormak istediğin bir şey mi var? Birlikte çalışmak mı istiyorsun? Her mesajı okuyorum. ✉️</p>
+  </header>
 
-    <p class="reveal" style="font-size:1.05rem; line-height:1.9; color:var(--text-body); max-width:520px; margin-bottom:2rem;">
-      Bana sosyal medyadan ulaşabilirsin. GitHub'da projelerimi inceleyebilir, 
-      Instagram'da takip edebilirsin! 👋
-    </p>
+  <!-- İÇERİK -->
+  <div class="contact-layout">
 
-    <div class="contact-links reveal">
+    <!-- SOL: BİLGİ KARTLARI -->
+    <aside class="info-sidebar">
+      <div class="info-card" style="animation-delay:0.1s">
+        <span class="info-icon">📍</span>
+        <p class="info-label">Konum</p>
+        <p class="info-value">Kayseri, Türkiye</p>
+      </div>
+      <div class="info-card" style="animation-delay:0.2s">
+        <span class="info-icon">🎮</span>
+        <p class="info-label">Hobiler</p>
+        <p class="info-value">Valorant, müzik, seyahat</p>
+      </div>
+      <div class="info-card" style="animation-delay:0.3s">
+        <span class="info-icon">⏰</span>
+        <p class="info-label">Yanıt Süresi</p>
+        <p class="info-value">Genellikle 1–2 gün içinde</p>
+      </div>
+    </aside>
 
-      <!-- GitHub -->
-      <a class="contact-link" href="https://github.com/aybuke3838" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58C20.57 22.3 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"/>
-        </svg>
-        github.com/aybuke3838
-      </a>
+    <!-- SAĞ: FORM -->
+    <div>
+      <div class="form-card" id="formCard">
 
-      <!-- Instagram -->
-      <a class="contact-link" href="https://www.instagram.com/aybkygmrr/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-        </svg>
-        @aybkygmrr
-      </a>
+        <div class="form-row-split">
+          <div>
+            <label for="fname">Ad <span class="req">*</span></label>
+            <input type="text" id="fname" placeholder="Adın" autocomplete="given-name" />
+            <p class="err-msg" id="fname-err">Ad boş bırakılamaz.</p>
+          </div>
+          <div>
+            <label for="lname">Soyad <span class="req">*</span></label>
+            <input type="text" id="lname" placeholder="Soyadın" autocomplete="family-name" />
+            <p class="err-msg" id="lname-err">Soyad boş bırakılamaz.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="email">E-posta <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="ornek@mail.com" autocomplete="email" />
+          <p class="err-msg" id="email-err">Geçerli bir e-posta adresi girin.</p>
+        </div>
+
+        <div class="form-row">
+          <label for="subject">Konu <span class="req">*</span></label>
+          <select id="subject">
+            <option value="" disabled selected>Bir konu seç…</option>
+            <option value="iletisim">Genel İletişim</option>
+            <option value="isbirligi">İş Birliği</option>
+            <option value="proje">Proje Hakkında</option>
+            <option value="diger">Diğer</option>
+          </select>
+          <p class="err-msg" id="subject-err">Lütfen bir konu seç.</p>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Mesaj <span class="req">*</span></label>
+          <textarea id="message" placeholder="Merhaba Aybüke, seninle…" maxlength="500"></textarea>
+          <div class="char-row">
+            <span class="char-count" id="charCount">0 / 500</span>
+          </div>
+          <p class="err-msg" id="message-err">Mesaj en az 10 karakter olmalıdır.</p>
+        </div>
+
+        <div class="submit-wrap">
+          <button class="btn-submit" id="submitBtn" type="button">
+            <div class="btn-spinner"></div>
+            <span class="btn-text">Gönder →</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- BAŞARI MESAJI -->
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✦</div>
+        <p class="success-title">Mesajın ulaştı!</p>
+        <p class="success-text">En kısa sürede geri döneceğim. Teşekkürler! 🎉</p>
+      </div>
     </div>
-  </section>
+  </div>
 
   <footer>
     Sevgiyle yapıldı &nbsp;✦&nbsp; <span>Aybüke Yağmur</span> © 2026
   </footer>
 
-  <script src="../assests/js/jScript.js"></script>
+  <button id="scrollTopBtn" aria-label="Yukarı çık" title="Yukarı çık">↑</button>
+
+  <script>
+    /* ── DARK MODE ── */
+    const darkBtn = document.getElementById('darkToggle');
+    if (localStorage.getItem('aybuke-dark-mode') === 'true') document.body.classList.add('dark-mode');
+    darkBtn.addEventListener('click', () => {
+      const d = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('aybuke-dark-mode', d);
+    });
+
+    /* ── HAMBURGEr ── */
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    const overlay   = document.querySelector('.nav-overlay');
+
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open', open);
+      overlay.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    overlay.addEventListener('click', closeMenu);
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+      overlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    /* ── SCROLL TOP ── */
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('show', window.scrollY > 300);
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ── CHAR COUNTER ── */
+    const msgEl    = document.getElementById('message');
+    const countEl  = document.getElementById('charCount');
+
+    msgEl.addEventListener('input', () => {
+      const len = msgEl.value.length;
+      countEl.textContent = `${len} / 500`;
+      countEl.classList.toggle('warn', len >= 450);
+    });
+
+    /* ── FORM VALIDATION ── */
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setError(id, errId, show) {
+      const el  = document.getElementById(id);
+      const err = document.getElementById(errId);
+      el.classList.toggle('error', show);
+      err.classList.toggle('show', show);
+      return !show;
+    }
+
+    function clearError(id, errId) {
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(errId).classList.remove('show');
+    }
+
+    /* Clear error on input */
+    ['fname','lname','email','subject','message'].forEach(id => {
+      const el = document.getElementById(id);
+      const evt = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(evt, () => clearError(id, id + '-err'));
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const fname   = document.getElementById('fname').value.trim();
+      const lname   = document.getElementById('lname').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value.trim();
+
+      let valid = true;
+
+      valid = setError('fname',   'fname-err',   fname.length < 1)   && valid;
+      valid = setError('lname',   'lname-err',   lname.length < 1)   && valid;
+      valid = setError('email',   'email-err',   !EMAIL_RE.test(email)) && valid;
+      valid = setError('subject', 'subject-err', subject === '')      && valid;
+      valid = setError('message', 'message-err', message.length < 10) && valid;
+
+      if (!valid) {
+        /* scroll to first error */
+        const first = document.querySelector('.error');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      /* Simulate send */
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.classList.add('loading');
+      btn.querySelector('.btn-text').textContent = 'Gönderiliyor…';
+
+      setTimeout(() => {
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 1400);
+    });
+  </script>
 </body>
 </html>
