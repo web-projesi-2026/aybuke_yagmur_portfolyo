@@ -1,1 +1,57 @@
 projects.json
+[
+  {
+    "id": 1,
+    "title": "Portfolyo Sitesi",
+    "category": "Web",
+    "emoji": "🌐",
+    "desc": "Kişisel portfolyo sitem. HTML, CSS ve JavaScript ile yapıldı. Dark mode, mobil menü ve scroll animasyonları içeriyor.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "link": "https://web-projesi-2026.github.io/aybuke_yagmur_portfolyo/"
+  },
+  {
+    "id": 2,
+    "title": "İletişim Formu",
+    "category": "JavaScript",
+    "emoji": "📬",
+    "desc": "Form doğrulama mantığı içeren iletişim sayfası. E-posta regex kontrolü, hata mesajları ve başarılı gönderim ekranı mevcut.",
+    "tags": ["HTML", "CSS", "Validation"],
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "title": "Dark Mode & Scroll Top",
+    "category": "JavaScript",
+    "emoji": "🌙",
+    "desc": "Portfolyo sitesine eklenen dark mode toggle ve yukarı çık butonu. localStorage ile tema tercihi kaydediliyor.",
+    "tags": ["JavaScript", "localStorage", "CSS"],
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "title": "Mobil Hamburger Menü",
+    "category": "CSS",
+    "emoji": "☰",
+    "desc": "Mobil uyumlu açılır/kapanır navigasyon menüsü. Overlay, X animasyonu ve smooth geçiş efektleri içeriyor.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "title": "Proje Favorileri",
+    "category": "JavaScript",
+    "emoji": "⭐",
+    "desc": "JSON verisiyle dinamik olarak yüklenen proje kartları. Favoriye ekle/çıkar özelliği localStorage ile kalıcı olarak saklanıyor.",
+    "tags": ["JSON", "localStorage", "JavaScript"],
+    "link": "#"
+  },
+  {
+    "id": 6,
+    "title": "Haftalık Rapor Formu",
+    "category": "Web",
+    "emoji": "📋",
+    "desc": "Ders kapsamında her hafta doldurduğum ilerleme raporu sayfası. Form alanları ve doğrulama içeriyor.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "link": "#"
+  }
+]
