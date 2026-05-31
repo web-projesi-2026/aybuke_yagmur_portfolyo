@@ -1,0 +1,34 @@
+/* ── Bu satırları style.css'e EKLE (en sona) ── */
+
+/* Nav kullanıcı adı */
+.nav-user {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--purple-light);
+  white-space: nowrap;
+}
+
+/* Çıkış butonu */
+.nav-logout {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  background: none;
+  border: 1.5px solid var(--purple-light);
+  border-radius: 50px;
+  padding: 0.25rem 0.9rem;
+  color: var(--purple-ink);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-logout:hover {
+  background: var(--purple-mid);
+  color: white;
+  border-color: var(--purple-mid);
+}
+
+@media (max-width: 640px) {
+  .nav-user { display: none; }
+  .nav-logout { font-size: 0.85rem; padding: 0.2rem 0.6rem; }
+}
