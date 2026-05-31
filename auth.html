@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giriş Yap – Aybüke Yağmur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:  #5b21b6;
+      --purple-mid:   #7c3aed;
+      --purple-light: #a78bfa;
+      --purple-pale:  #ede9fe;
+      --purple-ink:   #4c1d95;
+      --line-color:   #c4b5fd44;
+      --margin-line:  #f9a8d4aa;
+      --text-dark:    #1e1b2e;
+      --text-body:    #3b3554;
+      --paper-bg:     #fdfcff;
+      --card-bg:      #ffffff;
+      --error:        #dc2626;
+      --error-bg:     #fef2f2;
+      --success:      #16a34a;
+      --success-bg:   #f0fdf4;
+    }
+
+    body.dark-mode {
+      --purple-deep:  #c4b5fd;
+      --purple-mid:   #a78bfa;
+      --purple-light: #7c3aed;
+      --purple-pale:  #2d1b69;
+      --purple-ink:   #ddd6fe;
+      --line-color:   #7c3aed22;
+      --margin-line:  #f9a8d433;
+      --text-dark:    #f0ebff;
+      --text-body:    #c4b5fd;
+      --paper-bg:     #0f0b1e;
+      --card-bg:      #1a1030;
+      --error:        #f87171;
+      --error-bg:     #2d1010;
+      --success:      #4ade80;
+      --success-bg:   #0f2d18;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', serif;
+      color: var(--text-dark);
+      background-color: var(--paper-bg);
+      background-image: repeating-linear-gradient(
+        transparent, transparent 31px,
+        var(--line-color) 31px, var(--line-color) 32px
+      );
+      background-size: 100% 32px;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      transition: background-color 0.4s, color 0.4s;
+      padding: 2rem 1rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 72px;
+      width: 2px; height: 100%;
+      background: var(--margin-line);
+      z-index: 0; pointer-events: none;
+    }
+
+    /* Dark toggle sağ üst */
+    .top-bar {
+      position: fixed; top: 1rem; right: 1.5rem;
+      z-index: 100;
+    }
+
+    .dark-toggle {
+      background: var(--card-bg);
+      border: 2px solid var(--purple-light);
+      border-radius: 50px;
+      width: 52px; height: 28px;
+      cursor: pointer; position: relative;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .dark-toggle::after {
+      content: '☀️';
+      position: absolute; top: 50%; left: 4px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      transition: left 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    body.dark-mode .dark-toggle { background: var(--purple-pale); border-color: var(--purple-mid); }
+    body.dark-mode .dark-toggle::after { content: '🌙'; left: 26px; }
+
+    /* KART */
+    .auth-wrap {
+      width: 100%; max-width: 440px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .site-logo {
+      font-family: 'Caveat', cursive;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--purple-mid);
+      text-align: center;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 1.5rem;
+      transition: background 0.4s;
+    }
+
+    .tab-btn {
+      flex: 1;
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem; font-weight: 700;
+      border: none; background: none;
+      border-radius: 50px;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      color: var(--text-body);
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .tab-btn.active { background: var(--purple-mid); color: white; }
+
+    .auth-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 20px;
+      padding: 2rem 1.75rem;
+      box-shadow: 4px 4px 0 var(--purple-pale);
+      transition: background 0.4s;
+    }
+
+    .auth-card h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--purple-deep); margin-bottom: 0.25rem;
+    }
+
+    .auth-card .subtitle {
+      font-size: 0.88rem; color: var(--text-body);
+      font-style: italic; margin-bottom: 1.5rem;
+    }
+
+    .alert {
+      display: none; border-radius: 12px;
+      padding: 0.7rem 1rem; font-size: 0.88rem;
+      margin-bottom: 1rem; font-style: italic;
+    }
+
+    .alert.show { display: block; }
+    .alert.success { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+    .alert.danger  { background: var(--error-bg);   color: var(--error);   border: 1px solid var(--error); }
+
+    .form-group { margin-bottom: 1.1rem; }
+
+    label {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--purple-ink); margin-bottom: 0.4rem;
+    }
+
+    label .req { color: var(--purple-mid); }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      font-family: 'Lora', serif; font-size: 0.93rem;
+      color: var(--text-dark);
+      background: var(--paper-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.4s;
+    }
+
+    input:focus { border-color: var(--purple-mid); box-shadow: 0 0 0 3px #7c3aed18; }
+    input.error { border-color: var(--error) !important; box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important; }
+
+    .err-msg { display: none; font-size: 0.8rem; color: var(--error); margin-top: 0.3rem; font-style: italic; }
+    .err-msg.show { display: block; }
+
+    .pw-wrap { position: relative; }
+
+    .pw-toggle {
+      position: absolute; right: 0.75rem; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: var(--purple-light);
+      transition: color 0.2s; padding: 2px;
+    }
+
+    .pw-toggle:hover { color: var(--purple-mid); }
+
+    .btn-submit {
+      width: 100%;
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem; font-weight: 700;
+      color: white; background: var(--purple-mid);
+      border: none; border-radius: 50px;
+      padding: 0.8rem; cursor: pointer;
+      box-shadow: 0 4px 24px #7c3aed44;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      margin-top: 0.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+
+    .btn-submit:hover { background: var(--purple-deep); transform: translateY(-2px); box-shadow: 0 8px 32px #7c3aed55; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .btn-submit.loading .btn-spinner { display: block; }
+
+    /* Kayıtlı kullanıcılar */
+    .users-section {
+      margin-top: 1.5rem;
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: background 0.4s;
+    }
+
+    .users-section h3 {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--purple-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .user-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--purple-pale);
+      font-size: 0.88rem;
+    }
+
+    .user-item:last-child { border-bottom: none; }
+
+    .user-name { font-family: 'Caveat', cursive; font-size: 1rem; color: var(--purple-mid); }
+    .user-email { font-size: 0.78rem; color: var(--text-body); font-style: italic; }
+
+    .btn-del {
+      background: none; border: none; cursor: pointer;
+      font-size: 0.85rem; color: var(--purple-light);
+      padding: 3px 7px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-del:hover { background: var(--error-bg); color: var(--error); }
+
+    .no-users { font-size: 0.85rem; color: var(--purple-light); font-style: italic; text-align: center; padding: 0.5rem 0; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin   { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <button class="dark-toggle" id="darkToggle" aria-label="Tema değiştir"></button>
+  </div>
+
+  <div class="auth-wrap">
+
+    <span class="site-logo">✦ Aybüke</span>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tabLogin">Giriş Yap</button>
+      <button class="tab-btn" id="tabRegister">Kayıt Ol</button>
+    </div>
+
+    <div class="alert" id="alertBox"></div>
+
+    <!-- GİRİŞ FORMU -->
+    <div class="auth-card" id="loginForm">
+      <h2>Hoş geldin ✦</h2>
+      <p class="subtitle">Devam etmek için giriş yap.</p>
+
+      <div class="form-group">
+        <label for="loginEmail">E-posta <span class="req">*</span></label>
+        <input type="email" id="loginEmail" placeholder="ornek@mail.com" autocomplete="email" />
+        <p class="err-msg" id="loginEmail-err">Geçerli bir e-posta girin.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="loginPassword">Şifre <span class="req">*</span></label>
+        <div class="pw-wrap">
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
+          <button class="pw-toggle" type="button" data-target="loginPassword">👁</button>
+        </div>
+        <p class="err-msg" id="loginPassword-err">Şifre boş bırakılamaz.</p>
+      </div>
+
+      <button class="btn-submit" id="loginBtn">
+        <div class="btn-spinner"></div>
+        <span class="btn-text">Giriş Yap →</span>
+      </button>
+    </div>
+
+    <!-- KAYIT FORMU -->
+    <div class="auth-card" id="registerForm" style="display:none">
+      <h2>Aramıza katıl ✦</h2>
+      <p class="subtitle">Yeni hesap oluştur.</p>
+
+      <div class="form-group">
+        <label for="regName">Ad Soyad <span class="req">*</span></label>
+        <input type="text" id="regName" placeholder="Adın Soyadın" autocomplete="name" />
+        <p class="err-msg" id="regName-err">Ad soyad boş bırakılamaz.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="regEmail">E-posta <span class="req">*</span></label>
+        <input type="email" id="regEmail" placeholder="ornek@mail.com" autocomplete="email" />
+        <p class="err-msg" id="regEmail-err">Geçerli bir e-posta girin.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="regPassword">Şifre <span class="req">*</span></label>
+        <div class="pw-wrap">
+          <input type="password" id="regPassword" placeholder="En az 6 karakter" autocomplete="new-password" />
+          <button class="pw-toggle" type="button" data-target="regPassword">👁</button>
+        </div>
+        <p class="err-msg" id="regPassword-err">Şifre en az 6 karakter olmalıdır.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="regPassword2">Şifre Tekrar <span class="req">*</span></label>
+        <div class="pw-wrap">
+          <input type="password" id="regPassword2" placeholder="Şifreyi tekrar girin" autocomplete="new-password" />
+          <button class="pw-toggle" type="button" data-target="regPassword2">👁</button>
+        </div>
+        <p class="err-msg" id="regPassword2-err">Şifreler eşleşmiyor.</p>
+      </div>
+
+      <button class="btn-submit" id="registerBtn">
+        <div class="btn-spinner"></div>
+        <span class="btn-text">Kayıt Ol →</span>
+      </button>
+    </div>
+
+    <!-- KAYITLI KULLANICILAR -->
+    <div class="users-section">
+      <h3>Kayıtlı Kullanıcılar</h3>
+      <div id="usersList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    var DB_KEY      = 'aybuke-users';
+    var SESSION_KEY = 'aybuke-session';
+    var EMAIL_RE    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    /* Zaten giriş yapıldıysa index'e yönlendir */
+    try {
+      if (localStorage.getItem(SESSION_KEY)) {
+        window.location.replace('index.html');
+      }
+    } catch(e) {}
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* DARK MODE */
+      var darkBtn = document.getElementById('darkToggle');
+      if (localStorage.getItem('aybuke-dark-mode') === 'true') document.body.classList.add('dark-mode');
+      darkBtn.addEventListener('click', function () {
+        var d = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('aybuke-dark-mode', d);
+      });
+
+      /* SEKME */
+      document.getElementById('tabLogin').addEventListener('click', function () {
+        this.classList.add('active');
+        document.getElementById('tabRegister').classList.remove('active');
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+        hideAlert();
+      });
+
+      document.getElementById('tabRegister').addEventListener('click', function () {
+        this.classList.add('active');
+        document.getElementById('tabLogin').classList.remove('active');
+        document.getElementById('registerForm').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+        hideAlert();
+      });
+
+      /* ŞİFRE GÖSTER */
+      document.querySelectorAll('.pw-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var inp = document.getElementById(btn.dataset.target);
+          inp.type = inp.type === 'password' ? 'text' : 'password';
+          btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+        });
+      });
+
+      /* ALERT */
+      var alertBox = document.getElementById('alertBox');
+      function showAlert(msg, type) {
+        alertBox.textContent = msg;
+        alertBox.className = 'alert show ' + type;
+        setTimeout(hideAlert, 3500);
+      }
+      function hideAlert() { alertBox.classList.remove('show'); }
+
+      /* ERROR */
+      function showErr(id) {
+        document.getElementById(id).classList.add('error');
+        document.getElementById(id + '-err').classList.add('show');
+      }
+      function hideErr(id) {
+        document.getElementById(id).classList.remove('error');
+        document.getElementById(id + '-err').classList.remove('show');
+      }
+
+      ['loginEmail','loginPassword','regName','regEmail','regPassword','regPassword2'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', function () { hideErr(id); });
+      });
+
+      /* VERİTABANI */
+      function getUsers() {
+        try { return JSON.parse(localStorage.getItem(DB_KEY)) || []; } catch(e) { return []; }
+      }
+      function saveUsers(u) { localStorage.setItem(DB_KEY, JSON.stringify(u)); }
+
+      /* GİRİŞ */
+      document.getElementById('loginBtn').addEventListener('click', function () {
+        var email = document.getElementById('loginEmail').value.trim();
+        var pw    = document.getElementById('loginPassword').value;
+        var err   = false;
+
+        hideErr('loginEmail'); hideErr('loginPassword');
+        if (!EMAIL_RE.test(email)) { showErr('loginEmail');    err = true; }
+        if (pw.length < 1)        { showErr('loginPassword'); err = true; }
+        if (err) return;
+
+        var users = getUsers();
+        var user  = null;
+        for (var i = 0; i < users.length; i++) {
+          if (users[i].email === email && users[i].password === pw) { user = users[i]; break; }
+        }
+
+        if (!user) { showAlert('E-posta veya şifre hatalı!', 'danger'); return; }
+
+        var btn = this;
+        btn.disabled = true; btn.classList.add('loading');
+        setTimeout(function () {
+          localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+          window.location.replace('index.html');
+        }, 900);
+      });
+
+      /* KAYIT */
+      document.getElementById('registerBtn').addEventListener('click', function () {
+        var name  = document.getElementById('regName').value.trim();
+        var email = document.getElementById('regEmail').value.trim();
+        var pw    = document.getElementById('regPassword').value;
+        var pw2   = document.getElementById('regPassword2').value;
+        var err   = false;
+
+        ['regName','regEmail','regPassword','regPassword2'].forEach(hideErr);
+        if (name.length < 1)       { showErr('regName');      err = true; }
+        if (!EMAIL_RE.test(email)) { showErr('regEmail');     err = true; }
+        if (pw.length < 6)         { showErr('regPassword');  err = true; }
+        if (pw !== pw2)            { showErr('regPassword2'); err = true; }
+        if (err) return;
+
+        var users = getUsers();
+        for (var i = 0; i < users.length; i++) {
+          if (users[i].email === email) { showAlert('Bu e-posta zaten kayıtlı!', 'danger'); return; }
+        }
+
+        var newUser = { id: Date.now(), name: name, email: email, password: pw, date: new Date().toLocaleDateString('tr-TR') };
+        var btn = this;
+        btn.disabled = true; btn.classList.add('loading');
+
+        setTimeout(function () {
+          users.push(newUser);
+          saveUsers(users);
+          localStorage.setItem(SESSION_KEY, JSON.stringify(newUser));
+          window.location.replace('index.html');
+        }, 900);
+      });
+
+      /* KULLANICI LİSTESİ */
+      function renderUsers() {
+        var users = getUsers();
+        var list  = document.getElementById('usersList');
+        list.innerHTML = '';
+        if (users.length === 0) {
+          list.innerHTML = '<p class="no-users">Henüz kayıtlı kullanıcı yok.</p>';
+          return;
+        }
+        users.forEach(function (u) {
+          var item = document.createElement('div');
+          item.className = 'user-item';
+          item.innerHTML =
+            '<div><p class="user-name">✦ ' + u.name + '</p><p class="user-email">' + u.email + '</p></div>' +
+            '<button class="btn-del" data-id="' + u.id + '">🗑</button>';
+          item.querySelector('.btn-del').addEventListener('click', function () {
+            var updated = getUsers().filter(function (x) { return x.id !== u.id; });
+            saveUsers(updated);
+            renderUsers();
+          });
+          list.appendChild(item);
+        });
+      }
+
+      renderUsers();
+    });
+  </script>
+</body>
+</html>
