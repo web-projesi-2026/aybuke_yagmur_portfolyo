@@ -1,18 +1,53 @@
 /* ─────────────────────────────────────────
    jScript.js — Aybüke Yağmur Portfolyo
-   İçerik: Mobil Menü · Dark Mode · Yukarı Çık · Reveal Animasyonu
+   İçerik: Oturum Kontrolü · Mobil Menü · Dark Mode · Yukarı Çık · Reveal
 ───────────────────────────────────────── */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
 
-  /* ── 1. MOBİL HAMBURGER MENÜ ── */
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks  = document.querySelector('.nav-links');
-  const overlay   = document.querySelector('.nav-overlay');
+  /* ── 1. OTURUM KONTROLÜ ── */
+  var SESSION_KEY = 'aybuke-session';
+
+  function getSession() {
+    try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
+  }
+
+  /* Hangi klasörde olduğumuzu bul */
+  var inPages = window.location.pathname.indexOf('/pages/') !== -1;
+  var authPage = window.location.pathname.indexOf('auth.html') !== -1;
+
+  if (!authPage) {
+    var session = getSession();
+    if (!session) {
+      /* Oturum yoksa giriş sayfasına yönlendir */
+      window.location.replace(inPages ? '../auth.html' : 'auth.html');
+      return;
+    }
+
+    /* Nav'da kullanıcı adını göster */
+    var navUser = document.getElementById('navUser');
+    if (navUser) {
+      navUser.textContent = '✦ ' + session.name.split(' ')[0];
+    }
+
+    /* Çıkış butonu */
+    var logoutBtn = document.getElementById('navLogout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function () {
+        localStorage.removeItem(SESSION_KEY);
+        window.location.replace(inPages ? '../auth.html' : 'auth.html');
+      });
+    }
+  }
+
+  /* ── 2. MOBİL HAMBURGER MENÜ ── */
+  var hamburger = document.querySelector('.hamburger');
+  var navLinks  = document.querySelector('.nav-links');
+  var overlay   = document.querySelector('.nav-overlay');
 
   if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
+    hamburger.addEventListener('click', function () {
+      var isOpen = hamburger.classList.toggle('open');
       navLinks.classList.toggle('open', isOpen);
       overlay && overlay.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', isOpen);
@@ -20,10 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     overlay && overlay.addEventListener('click', closeMenu);
-
-    navLinks.querySelectorAll('a').forEach(link =>
-      link.addEventListener('click', closeMenu)
-    );
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
 
     function closeMenu() {
       hamburger.classList.remove('open');
@@ -34,49 +68,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /* ── 3. DARK MODE ── */
+  var darkToggle = document.getElementById('darkToggle');
+  var DARK_KEY   = 'aybuke-dark-mode';
 
-  /* ── 2. DARK MODE ── */
-  const toggleBtn = document.getElementById('darkToggle');
-  const STORAGE_KEY = 'aybuke-dark-mode';
-
-  // Kaydedilmiş tercihi uygula
-  if (localStorage.getItem(STORAGE_KEY) === 'true') {
+  if (localStorage.getItem(DARK_KEY) === 'true') {
     document.body.classList.add('dark-mode');
   }
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('dark-mode');
-      localStorage.setItem(STORAGE_KEY, isDark);
-      toggleBtn.setAttribute('aria-label', isDark ? 'Açık moda geç' : 'Koyu moda geç');
+  if (darkToggle) {
+    darkToggle.addEventListener('click', function () {
+      var isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem(DARK_KEY, isDark);
     });
   }
 
-
-  /* ── 3. YUKARIYA ÇIK BUTONU ── */
-  const scrollBtn = document.getElementById('scrollTopBtn');
+  /* ── 4. YUKARIYA ÇIK BUTONU ── */
+  var scrollBtn = document.getElementById('scrollTopBtn');
 
   if (scrollBtn) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        scrollBtn.classList.add('show');
-      } else {
-        scrollBtn.classList.remove('show');
-      }
+    window.addEventListener('scroll', function () {
+      scrollBtn.classList.toggle('show', window.scrollY > 300);
     });
 
-    scrollBtn.addEventListener('click', () => {
+    scrollBtn.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-
-  /* ── 4. SCROLL REVEAL ANİMASYONU ── */
-  const revealEls = document.querySelectorAll('.reveal');
+  /* ── 5. SCROLL REVEAL ── */
+  var revealEls = document.querySelectorAll('.reveal');
 
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
@@ -84,26 +109,24 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.12 });
 
-    revealEls.forEach(el => observer.observe(el));
+    revealEls.forEach(function (el) { observer.observe(el); });
   } else {
-    // Eski tarayıcı fallback
-    revealEls.forEach(el => el.classList.add('visible'));
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
-
-  /* ── 5. HERO YAZI ANİMASYONU (Typewriter) ── */
-  const heroSub = document.getElementById('hero-subtitle');
+  /* ── 6. HERO TYPEWRITER ── */
+  var heroSub = document.getElementById('hero-subtitle');
   if (heroSub) {
-    const text = heroSub.dataset.text || heroSub.textContent;
+    var text = heroSub.dataset.text || heroSub.textContent;
     heroSub.textContent = '';
-    let i = 0;
-    const type = () => {
+    var i = 0;
+    var type = function () {
       if (i < text.length) {
         heroSub.textContent += text[i++];
         setTimeout(type, 45);
       }
     };
-    setTimeout(type, 700);
+    setTimeout(type, 500);
   }
 
 });
