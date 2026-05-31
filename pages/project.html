@@ -65,7 +65,7 @@
       z-index: 0; pointer-events: none;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--nav-bg);
@@ -160,7 +160,7 @@
     }
     .nav-overlay.open { opacity: 1; }
 
-    /* ── PAGE HEADER ── */
+    /* PAGE HEADER */
     .page-header {
       max-width: 900px; margin: 0 auto;
       padding: 4rem 2rem 0 5rem;
@@ -193,9 +193,69 @@
       font-style: italic; line-height: 1.7;
     }
 
-    /* ── TOOLBAR ── */
+    /* ARAMA KUTUSU */
+    .search-wrap {
+      max-width: 900px; margin: 1.5rem auto 0;
+      padding: 0 2rem 0 5rem;
+      position: relative; z-index: 1;
+    }
+
+    .search-inner {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute; left: 1rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem; color: var(--purple-light);
+      pointer-events: none;
+    }
+
+    .search-box {
+      width: 100%;
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background: var(--card-bg);
+      border: 1.5px solid var(--purple-pale);
+      border-radius: 50px;
+      padding: 0.65rem 2.5rem 0.65rem 2.8rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.4s;
+    }
+
+    .search-box:focus {
+      border-color: var(--purple-mid);
+      box-shadow: 0 0 0 3px #7c3aed18;
+    }
+
+    .search-box::placeholder { color: var(--purple-light); font-style: italic; }
+
+    .search-clear {
+      position: absolute; right: 0.9rem; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      font-size: 1.1rem; color: var(--purple-light);
+      line-height: 1; padding: 4px;
+      display: none;
+      transition: color 0.2s;
+    }
+
+    .search-clear.show { display: block; }
+    .search-clear:hover { color: var(--purple-mid); }
+
+    .search-result-info {
+      font-family: 'Caveat', cursive;
+      font-size: 0.95rem;
+      color: var(--purple-light);
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      min-height: 1.2rem;
+    }
+
+    /* TOOLBAR */
     .toolbar {
-      max-width: 900px; margin: 2rem auto 0;
+      max-width: 900px; margin: 1rem auto 0;
       padding: 0 2rem 0 5rem;
       display: flex; align-items: center;
       justify-content: space-between; flex-wrap: wrap;
@@ -224,7 +284,6 @@
       border-color: var(--purple-mid);
     }
 
-    /* Favori sayacı */
     .fav-counter {
       font-family: 'Caveat', cursive;
       font-size: 1rem;
@@ -239,7 +298,7 @@
 
     .fav-counter .star { color: var(--star-color); }
 
-    /* ── PROJE GRID ── */
+    /* PROJE GRID */
     .projects-grid {
       max-width: 900px; margin: 1.75rem auto 0;
       padding: 0 2rem 5rem 5rem;
@@ -249,7 +308,7 @@
       position: relative; z-index: 1;
     }
 
-    /* ── PROJE KARTI ── */
+    /* PROJE KARTI */
     .project-card {
       background: var(--card-bg);
       border: 1.5px solid var(--purple-pale);
@@ -267,11 +326,6 @@
       box-shadow: 6px 6px 0 var(--purple-light);
     }
 
-    .project-card.hidden {
-      display: none;
-    }
-
-    /* Sol çizgi */
     .project-card::before {
       content: ''; position: absolute;
       top: 0; left: 0; width: 4px; height: 100%;
@@ -284,17 +338,12 @@
       justify-content: space-between; gap: 0.5rem;
     }
 
-    .card-emoji {
-      font-size: 2rem; line-height: 1;
-      flex-shrink: 0;
-    }
+    .card-emoji { font-size: 2rem; line-height: 1; flex-shrink: 0; }
 
-    /* Favori butonu */
     .fav-btn {
       background: none; border: none; cursor: pointer;
       font-size: 1.3rem; line-height: 1;
-      padding: 4px;
-      border-radius: 8px;
+      padding: 4px; border-radius: 8px;
       transition: transform 0.2s, background 0.15s;
       flex-shrink: 0;
     }
@@ -310,14 +359,12 @@
 
     .card-badge {
       display: inline-block;
-      background: var(--purple-mid);
-      color: white;
+      background: var(--purple-mid); color: white;
       font-family: 'Caveat', cursive;
       font-size: 0.78rem; letter-spacing: 1.5px;
       text-transform: uppercase;
       padding: 0.15rem 0.75rem;
-      border-radius: 50px;
-      width: fit-content;
+      border-radius: 50px; width: fit-content;
       margin-top: 0.2rem;
     }
 
@@ -332,6 +379,14 @@
       line-height: 1.65; flex: 1;
     }
 
+    /* Arama sonucunda eşleşen kelimeyi vurgula */
+    .card-desc mark, .card-title mark {
+      background: #7c3aed33;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+
     .card-tags {
       display: flex; flex-wrap: wrap; gap: 0.4rem;
       margin-top: 0.25rem;
@@ -340,36 +395,28 @@
     .tag {
       font-family: 'Caveat', cursive;
       font-size: 0.85rem;
-      background: var(--purple-pale);
-      color: var(--purple-ink);
+      background: var(--purple-pale); color: var(--purple-ink);
       padding: 0.15rem 0.7rem;
       border-radius: 50px;
       border: 1px solid var(--purple-light);
       transition: background 0.15s, color 0.15s;
     }
 
-    .tag:hover {
-      background: var(--purple-mid);
-      color: white;
-    }
+    .tag:hover { background: var(--purple-mid); color: white; }
 
     .card-link {
       display: inline-flex; align-items: center; gap: 0.3rem;
       font-family: 'Caveat', cursive;
-      font-size: 1rem;
-      color: var(--purple-mid);
-      text-decoration: none;
-      margin-top: 0.25rem;
+      font-size: 1rem; color: var(--purple-mid);
+      text-decoration: none; margin-top: 0.25rem;
       transition: color 0.2s;
     }
 
     .card-link:hover { color: var(--purple-deep); }
 
-    /* Boş durum */
     .empty-state {
       grid-column: 1 / -1;
-      text-align: center;
-      padding: 3rem 1rem;
+      text-align: center; padding: 3rem 1rem;
     }
 
     .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
@@ -379,30 +426,22 @@
       font-size: 1.3rem; color: var(--purple-light);
     }
 
-    /* ── TOAST BİLDİRİMİ ── */
+    /* TOAST */
     .toast {
       position: fixed; bottom: 5rem; left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: var(--purple-mid);
-      color: white;
-      font-family: 'Caveat', cursive;
-      font-size: 1.05rem;
-      padding: 0.6rem 1.5rem;
-      border-radius: 50px;
+      background: var(--purple-mid); color: white;
+      font-family: 'Caveat', cursive; font-size: 1.05rem;
+      padding: 0.6rem 1.5rem; border-radius: 50px;
       box-shadow: 0 4px 20px #7c3aed44;
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.3s, transform 0.3s;
-      z-index: 9999;
-      white-space: nowrap;
+      z-index: 9999; white-space: nowrap;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ── SCROLL TOP ── */
+    /* SCROLL TOP */
     #scrollTopBtn {
       position: fixed; bottom: 2rem; right: 2rem;
       width: 48px; height: 48px; border-radius: 50%;
@@ -418,7 +457,6 @@
     #scrollTopBtn.show { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
     #scrollTopBtn:hover { background: var(--purple-deep); transform: translateY(-3px) scale(1.08); }
 
-    /* ── FOOTER ── */
     footer {
       text-align: center; padding: 2.5rem 1rem;
       font-family: 'Caveat', cursive; font-size: 1.05rem;
@@ -429,16 +467,15 @@
 
     footer span { color: var(--purple-mid); }
 
-    /* ── ANİMASYONLAR ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── RESPONSİVE ── */
     @media (max-width: 640px) {
       body::before { left: 48px; }
       .page-header { padding: 2.5rem 1.2rem 0 3.5rem; }
+      .search-wrap { padding: 0 1.2rem 0 3.5rem; }
       .toolbar { padding: 0 1.2rem 0 3.5rem; }
       .projects-grid { padding: 0 1.2rem 4rem 3.5rem; }
       nav { padding: 0 1rem; }
@@ -487,12 +524,27 @@
     </div>
   </nav>
 
-  <!-- BAŞLIK -->
   <header class="page-header">
     <span class="page-tag">Neler yaptım?</span>
     <h1 class="page-title">Benim <span>Projelerim</span></h1>
     <p class="page-desc">Geliştirdiğim projeler. ⭐ butonuna tıklayarak favorilerine ekleyebilirsin!</p>
   </header>
+
+  <!-- ARAMA KUTUSU -->
+  <div class="search-wrap">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-box"
+        id="searchBox"
+        placeholder="Proje ara… (başlık, açıklama veya etiket)"
+        autocomplete="off"
+      />
+      <button class="search-clear" id="searchClear" aria-label="Aramayı temizle">✕</button>
+    </div>
+    <p class="search-result-info" id="searchInfo"></p>
+  </div>
 
   <!-- TOOLBAR -->
   <div class="toolbar">
@@ -505,12 +557,8 @@
     </div>
   </div>
 
-  <!-- PROJE KARTLARI -->
-  <div class="projects-grid" id="projectsGrid">
-    <!-- JS ile doldurulacak -->
-  </div>
+  <div class="projects-grid" id="projectsGrid"></div>
 
-  <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
   <footer>
@@ -522,7 +570,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-      /* ── DARK MODE ── */
+      /* DARK MODE */
       var darkBtn = document.getElementById('darkToggle');
       if (localStorage.getItem('aybuke-dark-mode') === 'true') {
         document.body.classList.add('dark-mode');
@@ -532,7 +580,7 @@
         localStorage.setItem('aybuke-dark-mode', d);
       });
 
-      /* ── HAMBURGER ── */
+      /* HAMBURGER */
       var hamburger = document.querySelector('.hamburger');
       var navLinks  = document.querySelector('.nav-links');
       var overlay   = document.querySelector('.nav-overlay');
@@ -558,20 +606,16 @@
         document.body.style.overflow = '';
       }
 
-      /* ── SCROLL TOP ── */
+      /* SCROLL TOP */
       var scrollBtn = document.getElementById('scrollTopBtn');
       window.addEventListener('scroll', function () {
-        if (window.scrollY > 300) {
-          scrollBtn.classList.add('show');
-        } else {
-          scrollBtn.classList.remove('show');
-        }
+        scrollBtn.classList.toggle('show', window.scrollY > 300);
       });
       scrollBtn.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      /* ── TOAST ── */
+      /* TOAST */
       var toastEl = document.getElementById('toast');
       var toastTimer;
 
@@ -584,29 +628,23 @@
         }, 2000);
       }
 
-      /* ── FAVORİLER (localStorage) ── */
+      /* FAVORİLER */
       var FAVE_KEY = 'aybuke-fav-projects';
 
       function getFavs() {
-        try {
-          return JSON.parse(localStorage.getItem(FAVE_KEY)) || [];
-        } catch (e) {
-          return [];
-        }
+        try { return JSON.parse(localStorage.getItem(FAVE_KEY)) || []; }
+        catch (e) { return []; }
       }
 
       function saveFavs(favs) {
         localStorage.setItem(FAVE_KEY, JSON.stringify(favs));
       }
 
-      function isFav(id) {
-        return getFavs().indexOf(id) !== -1;
-      }
+      function isFav(id) { return getFavs().indexOf(id) !== -1; }
 
       function toggleFav(id, btn) {
         var favs = getFavs();
         var idx  = favs.indexOf(id);
-
         if (idx === -1) {
           favs.push(id);
           btn.textContent = '⭐';
@@ -618,23 +656,38 @@
           btn.classList.remove('active');
           showToast('Favorilerden çıkarıldı');
         }
-
         saveFavs(favs);
         updateFavCounter();
-
-        /* Aktif filtre "Favoriler" ise kartı gizle/göster */
-        if (activeFilter === 'Favoriler') {
-          renderCards(allProjects);
-        }
+        if (activeFilter === 'Favoriler') renderCards(allProjects);
       }
 
       function updateFavCounter() {
         document.getElementById('favCount').textContent = getFavs().length;
       }
 
-      /* ── FİLTRE ── */
-      var activeFilter = 'Tümü';
-      var allProjects  = [];
+      /* FİLTRE & ARAMA */
+      var activeFilter  = 'Tümü';
+      var searchQuery   = '';
+      var allProjects   = [];
+
+      var searchBox   = document.getElementById('searchBox');
+      var searchClear = document.getElementById('searchClear');
+      var searchInfo  = document.getElementById('searchInfo');
+
+      searchBox.addEventListener('input', function () {
+        searchQuery = searchBox.value.trim().toLowerCase();
+        searchClear.classList.toggle('show', searchQuery.length > 0);
+        renderCards(allProjects);
+      });
+
+      searchClear.addEventListener('click', function () {
+        searchBox.value = '';
+        searchQuery = '';
+        searchClear.classList.remove('show');
+        searchInfo.textContent = '';
+        renderCards(allProjects);
+        searchBox.focus();
+      });
 
       function buildFilters(projects) {
         var cats = ['Tümü', 'Favoriler'];
@@ -662,64 +715,87 @@
         });
       }
 
-      /* ── KART RENDER ── */
+      /* Metinde arama kelimesini vurgula */
+      function highlight(text, query) {
+        if (!query) return text;
+        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<mark>$1</mark>');
+      }
+
+      /* KART RENDER */
       function renderCards(projects) {
         var grid = document.getElementById('projectsGrid');
         grid.innerHTML = '';
-
         var favs = getFavs();
 
+        /* Önce kategori filtresi */
         var filtered = projects.filter(function (p) {
-          if (activeFilter === 'Tümü') return true;
           if (activeFilter === 'Favoriler') return favs.indexOf(p.id) !== -1;
-          return p.category === activeFilter;
+          if (activeFilter !== 'Tümü') return p.category === activeFilter;
+          return true;
         });
+
+        /* Sonra arama filtresi */
+        if (searchQuery) {
+          filtered = filtered.filter(function (p) {
+            return (
+              p.title.toLowerCase().indexOf(searchQuery) !== -1 ||
+              p.desc.toLowerCase().indexOf(searchQuery) !== -1 ||
+              p.tags.some(function (t) { return t.toLowerCase().indexOf(searchQuery) !== -1; }) ||
+              p.category.toLowerCase().indexOf(searchQuery) !== -1
+            );
+          });
+
+          searchInfo.textContent = filtered.length > 0
+            ? '"' + searchBox.value.trim() + '" için ' + filtered.length + ' proje bulundu.'
+            : '"' + searchBox.value.trim() + '" için sonuç bulunamadı.';
+        } else {
+          searchInfo.textContent = '';
+        }
 
         if (filtered.length === 0) {
           var empty = document.createElement('div');
           empty.className = 'empty-state';
-          empty.innerHTML = '<div class="empty-icon">🔍</div><p>Bu kategoride proje yok.</p>';
+          empty.innerHTML = '<div class="empty-icon">🔍</div><p>Proje bulunamadı.</p>';
           grid.appendChild(empty);
           return;
         }
 
         filtered.forEach(function (p, i) {
           var faved = isFav(p.id);
-
-          var card = document.createElement('div');
+          var card  = document.createElement('div');
           card.className = 'project-card';
           card.style.animationDelay = (i * 0.07) + 's';
+
+          var titleHtml = highlight(p.title, searchQuery);
+          var descHtml  = highlight(p.desc,  searchQuery);
 
           card.innerHTML =
             '<div class="card-top">' +
               '<span class="card-emoji">' + p.emoji + '</span>' +
-              '<button class="fav-btn" data-id="' + p.id + '" aria-label="Favoriye ekle" title="Favoriye ekle">' +
+              '<button class="fav-btn' + (faved ? ' active' : '') + '" data-id="' + p.id + '" aria-label="Favoriye ekle">' +
                 (faved ? '⭐' : '☆') +
               '</button>' +
             '</div>' +
             '<span class="card-badge">' + p.category + '</span>' +
-            '<p class="card-title">' + p.title + '</p>' +
-            '<p class="card-desc">' + p.desc + '</p>' +
+            '<p class="card-title">' + titleHtml + '</p>' +
+            '<p class="card-desc">' + descHtml + '</p>' +
             '<div class="card-tags">' +
-              p.tags.map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') +
+              p.tags.map(function (t) { return '<span class="tag">' + highlight(t, searchQuery) + '</span>'; }).join('') +
             '</div>' +
             (p.link && p.link !== '#'
               ? '<a class="card-link" href="' + p.link + '" target="_blank" rel="noopener">Siteyi Gör →</a>'
-              : '') ;
+              : '');
 
-          /* Favori butonu olayı */
-          var favBtn = card.querySelector('.fav-btn');
-          if (faved) favBtn.classList.add('active');
-
-          favBtn.addEventListener('click', function () {
-            toggleFav(p.id, favBtn);
+          card.querySelector('.fav-btn').addEventListener('click', function () {
+            toggleFav(p.id, card.querySelector('.fav-btn'));
           });
 
           grid.appendChild(card);
         });
       }
 
-      /* ── JSON VERİSİNİ YÜKLEme ── */
+      /* JSON YÜKLEMEk */
       fetch('../assests/data/projects.json')
         .then(function (res) {
           if (!res.ok) throw new Error('JSON yüklenemedi');
@@ -731,16 +807,14 @@
           renderCards(data);
           updateFavCounter();
         })
-        .catch(function (err) {
-          console.error(err);
-          /* Fetch başarısız olursa inline veriyi kullan */
+        .catch(function () {
           var fallback = [
-            { id: 1, title: "Portfolyo Sitesi",      category: "Web",        emoji: "🌐", desc: "Kişisel portfolyo sitem. HTML, CSS ve JavaScript ile yapıldı. Dark mode, mobil menü ve scroll animasyonları içeriyor.",                                                   tags: ["HTML","CSS","JavaScript"], link: "https://web-projesi-2026.github.io/aybuke_yagmur_portfolyo/" },
-            { id: 2, title: "İletişim Formu",         category: "JavaScript", emoji: "📬", desc: "Form doğrulama mantığı içeren iletişim sayfası. E-posta regex kontrolü, hata mesajları ve başarılı gönderim ekranı mevcut.",                                              tags: ["HTML","CSS","Validation"],  link: "#" },
-            { id: 3, title: "Dark Mode & Scroll Top", category: "JavaScript", emoji: "🌙", desc: "Portfolyo sitesine eklenen dark mode toggle ve yukarı çık butonu. localStorage ile tema tercihi kaydediliyor.",                                                          tags: ["JavaScript","localStorage","CSS"], link: "#" },
-            { id: 4, title: "Mobil Hamburger Menü",   category: "CSS",        emoji: "☰",  desc: "Mobil uyumlu açılır/kapanır navigasyon menüsü. Overlay, X animasyonu ve smooth geçiş efektleri içeriyor.",                                                              tags: ["HTML","CSS","JavaScript"], link: "#" },
-            { id: 5, title: "Proje Favorileri",       category: "JavaScript", emoji: "⭐", desc: "JSON verisiyle dinamik olarak yüklenen proje kartları. Favoriye ekle/çıkar özelliği localStorage ile kalıcı olarak saklanıyor.",                                         tags: ["JSON","localStorage","JavaScript"], link: "#" },
-            { id: 6, title: "Haftalık Rapor Formu",   category: "Web",        emoji: "📋", desc: "Ders kapsamında her hafta doldurduğum ilerleme raporu sayfası. Form alanları ve doğrulama içeriyor.",                                                                     tags: ["HTML","CSS","JavaScript"], link: "#" }
+            { id: 1, title: "Portfolyo Sitesi",      category: "Web",        emoji: "🌐", desc: "Kişisel portfolyo sitem. HTML, CSS ve JavaScript ile yapıldı. Dark mode, mobil menü ve scroll animasyonları içeriyor.",                tags: ["HTML","CSS","JavaScript"], link: "https://web-projesi-2026.github.io/aybuke_yagmur_portfolyo/" },
+            { id: 2, title: "İletişim Formu",         category: "JavaScript", emoji: "📬", desc: "Form doğrulama mantığı içeren iletişim sayfası. E-posta regex kontrolü, hata mesajları ve başarılı gönderim ekranı mevcut.",         tags: ["HTML","CSS","Validation"],        link: "#" },
+            { id: 3, title: "Dark Mode & Scroll Top", category: "JavaScript", emoji: "🌙", desc: "Portfolyo sitesine eklenen dark mode toggle ve yukarı çık butonu. localStorage ile tema tercihi kaydediliyor.",                       tags: ["JavaScript","localStorage","CSS"], link: "#" },
+            { id: 4, title: "Mobil Hamburger Menü",   category: "CSS",        emoji: "☰",  desc: "Mobil uyumlu açılır/kapanır navigasyon menüsü. Overlay, X animasyonu ve smooth geçiş efektleri içeriyor.",                           tags: ["HTML","CSS","JavaScript"],        link: "#" },
+            { id: 5, title: "Proje Favorileri",       category: "JavaScript", emoji: "⭐", desc: "JSON verisiyle dinamik olarak yüklenen proje kartları. Favoriye ekle/çıkar özelliği localStorage ile kalıcı olarak saklanıyor.",      tags: ["JSON","localStorage","JavaScript"],link: "#" },
+            { id: 6, title: "Haftalık Rapor Formu",   category: "Web",        emoji: "📋", desc: "Ders kapsamında her hafta doldurduğum ilerleme raporu sayfası. Form alanları ve doğrulama içeriyor.",                                  tags: ["HTML","CSS","JavaScript"],        link: "#" }
           ];
           allProjects = fallback;
           buildFilters(fallback);
@@ -748,7 +822,7 @@
           updateFavCounter();
         });
 
-    }); /* DOMContentLoaded */
+    });
   </script>
 </body>
 </html>
