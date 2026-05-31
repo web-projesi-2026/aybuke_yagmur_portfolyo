@@ -1,39 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hakkımda – Aybüke Yağmur</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="stylesheet" href="../assests/css/style.css" />
 </head>
 <body>
-
   <div class="nav-overlay"></div>
   <nav>
     <a class="nav-logo" href="../index.html">✦ Aybüke</a>
     <ul class="nav-links">
       <li><a href="../index.html">Ana Sayfa</a></li>
-      <li><a href="about.html">Hakkımda</a></li>
+      <li><a href="about.html" class="active">Hakkımda</a></li>
       <li><a href="project.html">Projeler</a></li>
       <li><a href="contact.html">İletişim</a></li>
     </ul>
-    <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+      <span class="nav-user" id="navUser"></span>
+      <button class="dark-toggle" id="darkToggle" aria-label="Koyu moda geç" title="Tema değiştir"></button>
+      <button class="nav-logout" id="navLogout" title="Çıkış Yap">Çıkış →</button>
+      <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <section class="section" id="about">
     <p class="section-label reveal">Beni Tanı</p>
     <h2 class="section-title reveal"><span>Hakkımda</span></h2>
-
     <p class="reveal" style="font-size:1.05rem; line-height:1.9; color:var(--text-body); max-width:600px; margin-bottom:2.5rem;">
       Merhaba! Ben <strong style="color:var(--purple-mid)">Aybüke Yağmur</strong>.
       Kayseri'de doğup büyüdüm. Valorant oynamak, müzik dinlemek ve yeni yerler keşfetmek
       en büyük tutkularım. Yemek söz konusu olunca gönlüm hep Kayseri Yağlaması'nda kalır.
     </p>
 
-    <!-- BİLGİ KARTLARI -->
     <div class="card-grid">
       <div class="card reveal">
         <span class="card-icon">📍</span>
@@ -52,7 +54,6 @@
       </div>
     </div>
 
-    <!-- HOBİLER -->
     <h3 class="section-title reveal" style="margin-top:3rem; font-size:1.9rem;"><span>Hobiler</span></h3>
     <div class="tag-cloud reveal">
       <span class="tag">🎵 Müzik Dinlemek</span>
@@ -67,6 +68,7 @@
     Sevgiyle yapıldı &nbsp;✦&nbsp; <span>Aybüke Yağmur</span> © 2026
   </footer>
 
+  <button id="scrollTopBtn" aria-label="Yukarı çık" title="Yukarı çık">↑</button>
   <script src="../assests/js/jScript.js"></script>
 </body>
 </html>
