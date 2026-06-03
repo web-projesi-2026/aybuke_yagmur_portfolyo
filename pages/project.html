@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projeler – Aybüke Yağmur</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
@@ -467,6 +468,10 @@
 
     footer span { color: var(--purple-mid); }
 
+    .nav-user { font-family: "Caveat", cursive; font-size: 1rem; color: var(--purple-light); white-space: nowrap; }
+    .nav-logout { font-family: "Caveat", cursive; font-size: 1rem; background: none; border: 1.5px solid var(--purple-light); border-radius: 50px; padding: 0.25rem 0.9rem; color: var(--purple-ink); cursor: pointer; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .nav-logout:hover { background: var(--purple-mid); color: white; border-color: var(--purple-mid); }
+    @media (max-width: 640px) { .nav-user { display: none; } .nav-logout { font-size: 0.85rem; padding: 0.2rem 0.6rem; } }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -517,7 +522,9 @@
       <li><a href="contact.html">İletişim</a></li>
     </ul>
     <div class="nav-right">
+      <span class="nav-user" id="navUser"></span>
       <button class="dark-toggle" id="darkToggle" aria-label="Koyu moda geç" title="Tema değiştir"></button>
+      <button class="nav-logout" id="navLogout" title="Çıkış Yap">Çıkış →</button>
       <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
