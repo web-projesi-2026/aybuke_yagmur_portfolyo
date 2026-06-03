@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>İletişim – Aybüke Yağmur</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
@@ -72,7 +73,6 @@
       z-index: 0; pointer-events: none;
     }
 
-    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--nav-bg);
@@ -91,9 +91,7 @@
       color: var(--purple-mid); text-decoration: none;
     }
 
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
 
     .nav-links a {
       font-family: 'Caveat', cursive;
@@ -111,12 +109,31 @@
       border-radius: 2px; transition: width 0.3s;
     }
 
-    .nav-links a:hover { color: var(--purple-mid); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: var(--purple-mid); }
-    .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--purple-mid); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
     .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .nav-user {
+      font-family: 'Caveat', cursive;
+      font-size: 1rem; color: var(--purple-light);
+      white-space: nowrap;
+    }
+
+    .nav-logout {
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      background: none;
+      border: 1.5px solid var(--purple-light);
+      border-radius: 50px;
+      padding: 0.25rem 0.9rem;
+      color: var(--purple-ink);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-logout:hover { background: var(--purple-mid); color: white; border-color: var(--purple-mid); }
 
     .dark-toggle {
       background: none;
@@ -149,11 +166,10 @@
     }
 
     .hamburger:hover { background: var(--purple-pale); }
-
     .hamburger span {
       display: block; width: 100%; height: 2.5px;
       background: var(--purple-mid); border-radius: 4px;
-      transition: transform 0.35s ease, opacity 0.25s, width 0.3s;
+      transition: transform 0.35s, opacity 0.25s, width 0.3s;
       transform-origin: center;
     }
 
@@ -169,7 +185,6 @@
     }
     .nav-overlay.open { opacity: 1; }
 
-    /* ── PAGE HEADER ── */
     .page-header {
       max-width: 760px; margin: 0 auto;
       padding: 4rem 2rem 0 5rem;
@@ -180,16 +195,14 @@
     .page-tag {
       font-family: 'Caveat', cursive;
       font-size: 0.95rem; letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--purple-light);
+      text-transform: uppercase; color: var(--purple-light);
       display: block; margin-bottom: 0.4rem;
     }
 
     .page-title {
       font-family: 'Caveat', cursive;
       font-size: clamp(2.4rem, 7vw, 4rem);
-      font-weight: 700; color: var(--purple-deep);
-      line-height: 1.05;
+      font-weight: 700; color: var(--purple-deep); line-height: 1.05;
     }
 
     .page-title span {
@@ -204,24 +217,19 @@
       font-style: italic; line-height: 1.7;
     }
 
-    /* ── MAIN LAYOUT ── */
     .contact-layout {
       max-width: 760px; margin: 2.5rem auto 0;
       padding: 0 2rem 5rem 5rem;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 2rem; position: relative; z-index: 1;
     }
 
-    /* ── INFO SIDEBAR ── */
     .info-sidebar { display: flex; flex-direction: column; gap: 1rem; }
 
     .info-card {
       background: var(--card-bg);
       border: 1.5px solid var(--purple-pale);
-      border-radius: 16px;
-      padding: 1.25rem 1rem;
+      border-radius: 16px; padding: 1.25rem 1rem;
       position: relative; overflow: hidden;
       transition: transform 0.2s, box-shadow 0.2s, background 0.4s;
       animation: fadeUp 0.7s ease both;
@@ -235,27 +243,20 @@
     }
 
     .info-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px #7c3aed18; }
-
     .info-icon { font-size: 1.5rem; margin-bottom: 0.4rem; display: block; }
 
     .info-label {
       font-family: 'Caveat', cursive;
       font-size: 0.8rem; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--purple-light);
-      margin-bottom: 0.2rem;
+      text-transform: uppercase; color: var(--purple-light); margin-bottom: 0.2rem;
     }
 
-    .info-value {
-      font-size: 0.9rem; color: var(--text-body);
-      word-break: break-all; line-height: 1.5;
-    }
+    .info-value { font-size: 0.9rem; color: var(--text-body); word-break: break-all; line-height: 1.5; }
 
-    /* ── FORM CARD ── */
     .form-card {
       background: var(--card-bg);
       border: 1.5px solid var(--purple-pale);
-      border-radius: 20px;
-      padding: 2rem 1.75rem;
+      border-radius: 20px; padding: 2rem 1.75rem;
       box-shadow: 4px 4px 0 var(--purple-pale);
       transition: background 0.4s;
       animation: fadeUp 0.7s 0.15s ease both;
@@ -264,42 +265,29 @@
     .form-row { margin-bottom: 1.25rem; }
 
     .form-row-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 1.25rem;
     }
 
     label {
       display: block;
       font-family: 'Caveat', cursive;
       font-size: 1.05rem; font-weight: 700;
-      color: var(--purple-ink);
-      margin-bottom: 0.4rem;
+      color: var(--purple-ink); margin-bottom: 0.4rem;
     }
 
     label .req { color: var(--purple-mid); }
 
-    input[type="text"],
-    input[type="email"],
-    textarea,
-    select {
-      width: 100%;
-      font-family: 'Lora', serif;
-      font-size: 0.93rem;
-      color: var(--text-dark);
-      background: var(--paper-bg);
-      border: 1.5px solid var(--purple-pale);
-      border-radius: 10px;
-      padding: 0.65rem 0.9rem;
-      outline: none;
+    input[type="text"], input[type="email"], textarea, select {
+      width: 100%; font-family: 'Lora', serif; font-size: 0.93rem;
+      color: var(--text-dark); background: var(--paper-bg);
+      border: 1.5px solid var(--purple-pale); border-radius: 10px;
+      padding: 0.65rem 0.9rem; outline: none; resize: vertical;
       transition: border-color 0.25s, box-shadow 0.25s, background 0.4s;
-      resize: vertical;
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: var(--purple-mid);
-      box-shadow: 0 0 0 3px #7c3aed18;
+      border-color: var(--purple-mid); box-shadow: 0 0 0 3px #7c3aed18;
     }
 
     input.error, textarea.error, select.error {
@@ -312,35 +300,21 @@
     select {
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.9rem center;
-      padding-right: 2.2rem;
-      cursor: pointer;
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+      padding-right: 2.2rem; cursor: pointer;
     }
 
-    /* ── ERROR / SUCCESS MESSAGES ── */
-    .err-msg {
-      display: none;
-      font-size: 0.8rem;
-      color: var(--error);
-      margin-top: 0.3rem;
-      font-style: italic;
-    }
-
+    .err-msg { display: none; font-size: 0.8rem; color: var(--error); margin-top: 0.3rem; font-style: italic; }
     .err-msg.show { display: block; }
 
     .form-success {
-      display: none;
-      background: var(--success-bg);
-      border: 1.5px solid var(--success);
-      border-radius: 14px;
-      padding: 2rem;
-      text-align: center;
+      display: none; background: var(--success-bg);
+      border: 1.5px solid var(--success); border-radius: 14px;
+      padding: 2rem; text-align: center;
       animation: fadeUp 0.5s ease both;
     }
 
     .form-success.show { display: block; }
-
     .success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
 
     .success-title {
@@ -351,62 +325,36 @@
 
     .success-text { font-size: 0.93rem; color: var(--text-body); font-style: italic; }
 
-    /* ── CHAR COUNTER ── */
-    .char-row {
-      display: flex; justify-content: flex-end;
-      margin-top: 0.25rem;
-    }
-
-    .char-count {
-      font-size: 0.75rem; color: var(--purple-light);
-      font-style: italic;
-    }
-
+    .char-row { display: flex; justify-content: flex-end; margin-top: 0.25rem; }
+    .char-count { font-size: 0.75rem; color: var(--purple-light); font-style: italic; }
     .char-count.warn { color: var(--error); }
 
-    /* ── SUBMIT ── */
-    .submit-wrap {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 1.5rem;
-    }
+    .submit-wrap { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
 
     .btn-submit {
       font-family: 'Caveat', cursive;
       font-size: 1.2rem; font-weight: 700;
       color: white; background: var(--purple-mid);
       border: none; border-radius: 50px;
-      padding: 0.8rem 2.5rem;
-      cursor: pointer;
+      padding: 0.8rem 2.5rem; cursor: pointer;
       box-shadow: 0 4px 24px #7c3aed44;
       transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
       display: flex; align-items: center; gap: 0.5rem;
     }
 
-    .btn-submit:hover {
-      background: var(--purple-deep);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px #7c3aed55;
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.6; cursor: not-allowed;
-      transform: none; box-shadow: none;
-    }
+    .btn-submit:hover { background: var(--purple-deep); transform: translateY(-3px); box-shadow: 0 8px 32px #7c3aed55; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .btn-spinner {
       width: 16px; height: 16px;
       border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: none;
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: none;
     }
 
     .btn-submit.loading .btn-spinner { display: block; }
     .btn-submit.loading .btn-text { opacity: 0.7; }
 
-    /* ── SCROLL TOP ── */
     #scrollTopBtn {
       position: fixed; bottom: 2rem; right: 2rem;
       width: 48px; height: 48px; border-radius: 50%;
@@ -422,7 +370,6 @@
     #scrollTopBtn.show { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
     #scrollTopBtn:hover { background: var(--purple-deep); transform: translateY(-3px) scale(1.08); }
 
-    /* ── FOOTER ── */
     footer {
       text-align: center; padding: 2.5rem 1rem;
       font-family: 'Caveat', cursive; font-size: 1.05rem;
@@ -433,24 +380,13 @@
 
     footer span { color: var(--purple-mid); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       body::before { left: 48px; }
       .page-header { padding: 2.5rem 1.2rem 0 3.5rem; }
-      .contact-layout {
-        grid-template-columns: 1fr;
-        padding: 0 1.2rem 4rem 3.5rem;
-      }
+      .contact-layout { grid-template-columns: 1fr; padding: 0 1.2rem 4rem 3.5rem; }
       .info-sidebar { flex-direction: row; flex-wrap: wrap; }
       .info-card { flex: 1 1 140px; }
       .form-row-split { grid-template-columns: 1fr; }
@@ -464,10 +400,8 @@
         background: rgba(255,255,255,0.97);
         backdrop-filter: blur(20px);
         border-left: 2px solid var(--purple-light);
-        flex-direction: column;
-        justify-content: center; align-items: flex-start;
-        gap: 0; padding: 5rem 2rem 2rem;
-        z-index: 199;
+        flex-direction: column; justify-content: center; align-items: flex-start;
+        gap: 0; padding: 5rem 2rem 2rem; z-index: 199;
         transform: translateX(110%);
         transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         box-shadow: -8px 0 40px #7c3aed22;
@@ -479,6 +413,8 @@
       .nav-links a { display: block; padding: 1rem 0.5rem; font-size: 1.6rem; }
       .submit-wrap { justify-content: stretch; }
       .btn-submit { width: 100%; justify-content: center; }
+      .nav-user { display: none; }
+      .nav-logout { font-size: 0.85rem; padding: 0.2rem 0.6rem; }
     }
   </style>
 </head>
@@ -495,24 +431,22 @@
       <li><a href="contact.html" class="active">İletişim</a></li>
     </ul>
     <div class="nav-right">
+      <span class="nav-user" id="navUser"></span>
       <button class="dark-toggle" id="darkToggle" aria-label="Koyu moda geç" title="Tema değiştir"></button>
+      <button class="nav-logout" id="navLogout" title="Çıkış Yap">Çıkış →</button>
       <button class="hamburger" aria-label="Menüyü aç" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- BAŞLIK -->
   <header class="page-header">
     <span class="page-tag">Benimle iletişime geç</span>
     <h1 class="page-title">Bir <span>Mesaj</span> Bırak</h1>
     <p class="page-desc">Sormak istediğin bir şey mi var? Birlikte çalışmak mı istiyorsun? Her mesajı okuyorum. ✉️</p>
   </header>
 
-  <!-- İÇERİK -->
   <div class="contact-layout">
-
-    <!-- SOL: BİLGİ KARTLARI -->
     <aside class="info-sidebar">
       <div class="info-card" style="animation-delay:0.1s">
         <span class="info-icon">📍</span>
@@ -531,10 +465,8 @@
       </div>
     </aside>
 
-    <!-- SAĞ: FORM -->
     <div>
       <div class="form-card" id="formCard">
-
         <div class="form-row-split">
           <div>
             <label for="fname">Ad <span class="req">*</span></label>
@@ -581,10 +513,8 @@
             <span class="btn-text">Gönder →</span>
           </button>
         </div>
-
       </div>
 
-      <!-- BAŞARI MESAJI -->
       <div class="form-success" id="formSuccess">
         <div class="success-icon">✦</div>
         <p class="success-title">Mesajın ulaştı!</p>
@@ -599,112 +529,69 @@
 
   <button id="scrollTopBtn" aria-label="Yukarı çık" title="Yukarı çık">↑</button>
 
+  <script src="../assests/js/jScript.js"></script>
   <script>
-    /* ── DARK MODE ── */
-    const darkBtn = document.getElementById('darkToggle');
-    if (localStorage.getItem('aybuke-dark-mode') === 'true') document.body.classList.add('dark-mode');
-    darkBtn.addEventListener('click', () => {
-      const d = document.body.classList.toggle('dark-mode');
-      localStorage.setItem('aybuke-dark-mode', d);
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+      /* CHAR COUNTER */
+      var msgEl   = document.getElementById('message');
+      var countEl = document.getElementById('charCount');
+      msgEl.addEventListener('input', function () {
+        var len = msgEl.value.length;
+        countEl.textContent = len + ' / 500';
+        countEl.classList.toggle('warn', len >= 450);
+      });
 
-    /* ── HAMBURGEr ── */
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks  = document.querySelector('.nav-links');
-    const overlay   = document.querySelector('.nav-overlay');
+      /* FORM VALIDATION */
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    hamburger.addEventListener('click', () => {
-      const open = hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open', open);
-      overlay.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-
-    overlay.addEventListener('click', closeMenu);
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
-    function closeMenu() {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-      overlay.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-
-    /* ── SCROLL TOP ── */
-    const scrollBtn = document.getElementById('scrollTopBtn');
-    window.addEventListener('scroll', () => {
-      scrollBtn.classList.toggle('show', window.scrollY > 300);
-    });
-    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    /* ── CHAR COUNTER ── */
-    const msgEl    = document.getElementById('message');
-    const countEl  = document.getElementById('charCount');
-
-    msgEl.addEventListener('input', () => {
-      const len = msgEl.value.length;
-      countEl.textContent = `${len} / 500`;
-      countEl.classList.toggle('warn', len >= 450);
-    });
-
-    /* ── FORM VALIDATION ── */
-    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    function setError(id, errId, show) {
-      const el  = document.getElementById(id);
-      const err = document.getElementById(errId);
-      el.classList.toggle('error', show);
-      err.classList.toggle('show', show);
-      return !show;
-    }
-
-    function clearError(id, errId) {
-      document.getElementById(id).classList.remove('error');
-      document.getElementById(errId).classList.remove('show');
-    }
-
-    /* Clear error on input */
-    ['fname','lname','email','subject','message'].forEach(id => {
-      const el = document.getElementById(id);
-      const evt = el.tagName === 'SELECT' ? 'change' : 'input';
-      el.addEventListener(evt, () => clearError(id, id + '-err'));
-    });
-
-    document.getElementById('submitBtn').addEventListener('click', () => {
-      const fname   = document.getElementById('fname').value.trim();
-      const lname   = document.getElementById('lname').value.trim();
-      const email   = document.getElementById('email').value.trim();
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value.trim();
-
-      let valid = true;
-
-      valid = setError('fname',   'fname-err',   fname.length < 1)   && valid;
-      valid = setError('lname',   'lname-err',   lname.length < 1)   && valid;
-      valid = setError('email',   'email-err',   !EMAIL_RE.test(email)) && valid;
-      valid = setError('subject', 'subject-err', subject === '')      && valid;
-      valid = setError('message', 'message-err', message.length < 10) && valid;
-
-      if (!valid) {
-        /* scroll to first error */
-        const first = document.querySelector('.error');
-        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
+      function showErr(id) {
+        document.getElementById(id).classList.add('error');
+        document.getElementById(id + '-err').classList.add('show');
       }
 
-      /* Simulate send */
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.classList.add('loading');
-      btn.querySelector('.btn-text').textContent = 'Gönderiliyor…';
+      function hideErr(id) {
+        document.getElementById(id).classList.remove('error');
+        document.getElementById(id + '-err').classList.remove('show');
+      }
 
-      setTimeout(() => {
-        document.getElementById('formCard').style.display = 'none';
-        document.getElementById('formSuccess').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 1400);
+      ['fname','lname','email','message'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () { hideErr(id); });
+      });
+      document.getElementById('subject').addEventListener('change', function () { hideErr('subject'); });
+
+      document.getElementById('submitBtn').addEventListener('click', function () {
+        var fname   = document.getElementById('fname').value.trim();
+        var lname   = document.getElementById('lname').value.trim();
+        var email   = document.getElementById('email').value.trim();
+        var subject = document.getElementById('subject').value;
+        var message = document.getElementById('message').value.trim();
+        var hasErr  = false;
+
+        ['fname','lname','email','subject','message'].forEach(hideErr);
+
+        if (fname.length < 1)          { showErr('fname');   hasErr = true; }
+        if (lname.length < 1)          { showErr('lname');   hasErr = true; }
+        if (!EMAIL_RE.test(email))     { showErr('email');   hasErr = true; }
+        if (!subject)                  { showErr('subject'); hasErr = true; }
+        if (message.length < 10)       { showErr('message'); hasErr = true; }
+
+        if (hasErr) {
+          var first = document.querySelector('.error');
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.classList.add('loading');
+        btn.querySelector('.btn-text').textContent = 'Gönderiliyor…';
+
+        setTimeout(function () {
+          document.getElementById('formCard').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 1400);
+      });
     });
   </script>
 </body>
