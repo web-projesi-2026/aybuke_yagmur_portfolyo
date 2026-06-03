@@ -577,6 +577,19 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
 
+      /* OTURUM KONTROLÜ */
+      var SESSION_KEY = 'aybuke-session';
+      var _session;
+      try { _session = JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e) { _session = null; }
+      if (!_session) { window.location.replace('../auth.html'); return; }
+      var navUser = document.getElementById('navUser');
+      if (navUser) navUser.textContent = '✦ ' + _session.name.split(' ')[0];
+      var navLogout = document.getElementById('navLogout');
+      if (navLogout) navLogout.addEventListener('click', function () {
+        localStorage.removeItem(SESSION_KEY);
+        window.location.replace('../auth.html');
+      });
+
       /* DARK MODE */
       var darkBtn = document.getElementById('darkToggle');
       if (localStorage.getItem('aybuke-dark-mode') === 'true') {
